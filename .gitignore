@@ -1,0 +1,51 @@
+# Ignore Visual Studio temporary files, build results, and
+# user-specific files
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Build results
+bin/
+obj/
+
+# Visual Studio working folder
+.vs/
+
+# Include if using JetBrains Rider
+.idea/
+
+# NuGet packages folder
+packages/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# VS Code settings
+.vscode/
+
+# Backup & log files
+*.log
+*.bak
+*.tmp
+
+# ReSharper files
+_ReSharper*/
+*.DotSettings.user
+
+# Auto-generated files (e.g. designer files you don’t want tracked)
+*.Designer.cs
+
+# Uncomment if using Entity Framework migrations (optional)
+#migrations/
+
+# If using GitHub Copilot or secrets scanning:
+*.env
+*.secret

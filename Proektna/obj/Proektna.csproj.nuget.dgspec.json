@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programs\\Vezbanje\\C# Vezbi\\Proektna\\Proektna\\Proektna.csproj": {}
+    "D:\\Programs\\Vezbanje\\C# Vezbi\\Memory Game\\Proektna\\Proektna.csproj": {}
   },
   "projects": {
-    "D:\\Programs\\Vezbanje\\C# Vezbi\\Proektna\\Proektna\\Proektna.csproj": {
+    "D:\\Programs\\Vezbanje\\C# Vezbi\\Memory Game\\Proektna\\Proektna.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programs\\Vezbanje\\C# Vezbi\\Proektna\\Proektna\\Proektna.csproj",
+        "projectUniqueName": "D:\\Programs\\Vezbanje\\C# Vezbi\\Memory Game\\Proektna\\Proektna.csproj",
         "projectName": "Proektna",
-        "projectPath": "D:\\Programs\\Vezbanje\\C# Vezbi\\Proektna\\Proektna\\Proektna.csproj",
+        "projectPath": "D:\\Programs\\Vezbanje\\C# Vezbi\\Memory Game\\Proektna\\Proektna.csproj",
         "packagesPath": "C:\\Users\\Kristijan\\.nuget\\packages\\",
-        "outputPath": "D:\\Programs\\Vezbanje\\C# Vezbi\\Proektna\\Proektna\\obj\\",
+        "outputPath": "D:\\Programs\\Vezbanje\\C# Vezbi\\Memory Game\\Proektna\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
