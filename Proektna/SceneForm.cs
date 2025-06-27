@@ -17,20 +17,20 @@ namespace Proektna
 
         List<string> Icons;
 
+        Label firstClicked, secondClicked;
+        bool isChecking = false;
+        int pairsFound = 0;
+        int totalPairs = 0;
         public SceneForm(string selectiranaVrednost)
         {
             InitializeComponent();
+            timer1.Interval = 1000;
             tlpContainer.RowStyles.Clear();
             tlpContainer.ColumnStyles.Clear();
             Icons = GenerateIcons(selectiranaVrednost);
+            totalPairs = int.Parse(selectiranaVrednost);
             switch (selectiranaVrednost)
             {
-                case "2":
-
-                    tlpContainer.RowCount = 2;
-                    tlpContainer.ColumnCount = 2;
-
-                    break;
                 case "4":
                     tlpContainer.RowCount = 2;
                     tlpContainer.ColumnCount = 4;
@@ -41,6 +41,10 @@ namespace Proektna
                     break;
                 case "8":
                     tlpContainer.RowCount = 4;
+                    tlpContainer.ColumnCount = 4;
+                    break;
+                case "10":
+                    tlpContainer.RowCount = 5;
                     tlpContainer.ColumnCount = 4;
                     break;
                 default:
@@ -79,14 +83,58 @@ namespace Proektna
                         Width = widthCell,
                         Height = heightCell,
                         Font = new Font("Webdings", 72, FontStyle.Bold),
+                        ForeColor = Color.SteelBlue
 
                     };
 
                     tlpContainer.Controls.Add(label, i, j);
                     Icons.RemoveAt(randomNumber);
+
+                    label_Click(label);
                 }
 
             }
+
+        }
+
+        public void label_Click(Label label)
+        {
+            label.Click += (sender, e) =>
+            {
+                if (isChecking)
+                    return;
+                Label clickedLabel = sender as Label;
+                if (clickedLabel == null || clickedLabel.ForeColor == Color.Black)
+                    return;
+
+                clickedLabel.ForeColor = Color.Black;
+                clickedLabel.BackColor = Color.Red;
+
+                if (firstClicked == null)
+                {
+                    firstClicked = clickedLabel;
+                    return;
+                }
+
+                secondClicked = clickedLabel;
+
+                if (firstClicked.Text == secondClicked.Text)
+                {
+                    pairsFound++;
+                    firstClicked = null;
+                    secondClicked = null;
+
+                    if(pairsFound == totalPairs)
+                    {
+                        MessageBox.Show("Congratulations! You found all pairs!");
+                        this.Close();
+                    }
+                    return;
+                }
+                isChecking = true;
+
+                timer1.Start();
+            };
         }
 
         private List<string> GenerateIcons(string selectiranaVrednost)
@@ -94,18 +142,36 @@ namespace Proektna
             int totalIcons = int.Parse(selectiranaVrednost);
             List<string> icons = new List<string>();
 
-            string possibleIcons = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string possibleIcons = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!,";
 
             for (int i = 0; i < totalIcons; i++)
             {
                 int randomIndex = random.Next(possibleIcons.Length);
                 char icon = possibleIcons[randomIndex];
                 icons.Add(icon.ToString());
-                icons.Add(icon.ToString()); // Add the same icon twice for matching
-                possibleIcons = possibleIcons.Remove(randomIndex, 1); // Remove used icon to avoid duplicates
+                icons.Add(icon.ToString());
+                possibleIcons = possibleIcons.Remove(randomIndex, 1);
             }
 
             return icons;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (firstClicked == null || secondClicked == null)
+            {
+                timer1.Stop();
+                isChecking = false;
+                return;
+            }
+            timer1.Stop();
+            firstClicked.ForeColor = Color.SteelBlue;
+            firstClicked.BackColor = Color.SteelBlue;
+            secondClicked.ForeColor = Color.SteelBlue;
+            secondClicked.BackColor = Color.SteelBlue;
+            firstClicked = null;
+            secondClicked = null;
+            isChecking = false;
         }
     }
 }

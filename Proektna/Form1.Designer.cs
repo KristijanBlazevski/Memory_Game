@@ -32,6 +32,7 @@
             label1 = new Label();
             label2 = new Label();
             comboBox1 = new ComboBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // button1
@@ -68,19 +69,31 @@
             // comboBox1
             // 
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "2", "4", "6", "8" });
+            comboBox1.Items.AddRange(new object[] { "4", "6", "8", "10" });
             comboBox1.Location = new Point(310, 334);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(183, 23);
+            comboBox1.Size = new Size(183, 29);
             comboBox1.TabIndex = 3;
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(310, 311);
+            label3.Name = "label3";
+            label3.Size = new Size(170, 20);
+            label3.TabIndex = 4;
+            label3.Text = "Choose number of cards";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 561);
+            Controls.Add(label3);
             Controls.Add(comboBox1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -97,5 +110,6 @@
         private Label label1;
         private Label label2;
         private ComboBox comboBox1;
+        private Label label3;
     }
 }

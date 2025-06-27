@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Proektna
 {
-    internal class Card
+    public class Card
     {
+
     }
 }
