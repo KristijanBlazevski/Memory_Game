@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
             label1 = new Label();
             label2 = new Label();
@@ -37,34 +38,36 @@
             // 
             // button1
             // 
+            button1.BackColor = SystemColors.ActiveBorder;
             button1.Enabled = false;
-            button1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(310, 209);
+            button1.Font = new Font("Stencil", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.Location = new Point(310, 116);
             button1.Name = "button1";
             button1.Size = new Size(183, 80);
             button1.TabIndex = 0;
             button1.Text = "Start Game";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(227, 102);
+            label1.Font = new Font("Stencil", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(227, 9);
             label1.Name = "label1";
-            label1.Size = new Size(363, 65);
+            label1.Size = new Size(371, 57);
             label1.TabIndex = 1;
             label1.Text = "Memory Game";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 396);
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(12, 281);
             label2.Name = "label2";
-            label2.Size = new Size(64, 15);
+            label2.Size = new Size(662, 272);
             label2.TabIndex = 2;
-            label2.Text = "Discription";
+            label2.Text = resources.GetString("label2.Text");
             // 
             // comboBox1
             // 
@@ -72,7 +75,7 @@
             comboBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "4", "6", "8", "10" });
-            comboBox1.Location = new Point(310, 334);
+            comboBox1.Location = new Point(310, 249);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(183, 29);
             comboBox1.TabIndex = 3;
@@ -82,7 +85,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(310, 311);
+            label3.Location = new Point(310, 226);
             label3.Name = "label3";
             label3.Size = new Size(170, 20);
             label3.TabIndex = 4;
@@ -92,6 +95,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(784, 561);
             Controls.Add(label3);
             Controls.Add(comboBox1);

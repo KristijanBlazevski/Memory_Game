@@ -117,4 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Discription:
+Players: 2
+
+For every pair you get 3 points, for every missed you lose -1 point
+
+Player 1 starts first and for every missed pair its the other players turn
+
+Each player has:
+- Timer that is set at the start of the game, the timer starts when its the players turn
+- 1 Joker that reveals all cards for a split second but you lose 3 points (can be used only once)
+- 1 Reset Button that resets the cards and the time left that the player has (can be used only once)
+
+Game Ends:                                                 Winner:                                                                    
+-When all the pairs are found                        -The player with the most points or if the timer didn't ended
+-If the player's time ends he loses 
+  and game ends            
+</value>
+  </data>
 </root>

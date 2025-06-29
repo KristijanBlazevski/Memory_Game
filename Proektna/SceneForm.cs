@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,17 +19,25 @@ namespace Proektna
         List<string> Icons;
 
         Label firstClicked, secondClicked;
+
+        Player player1, player2;
+        Player currentPlayer;
+
         bool isChecking = false;
         int pairsFound = 0;
         int totalPairs = 0;
+        
         public SceneForm(string selectiranaVrednost)
         {
             InitializeComponent();
-            timer1.Interval = 1000;
-            tlpContainer.RowStyles.Clear();
-            tlpContainer.ColumnStyles.Clear();
+            player1 = new Player("Player 1");
+            player2 = new Player("Player 2");
+            currentPlayer = player1;
+           
+            timer1.Interval = 1000;            
             Icons = GenerateIcons(selectiranaVrednost);
             totalPairs = int.Parse(selectiranaVrednost);
+            labelPlayerTurn.Text = currentPlayer.Name;
             switch (selectiranaVrednost)
             {
                 case "4":
@@ -64,6 +73,49 @@ namespace Proektna
             GenerateLabels(selectiranaVrednost);
         }
 
+        private void UpdatePlayerUI()
+        {
+            labelPlayerTurn.Text = currentPlayer.Name;
+            pointsFirst.Text = "Points: " + player1.score;
+            pointsSecond.Text = "Points: " + player2.score;
+        }
+
+        private void SwitchPlayer()
+        {
+            if(currentPlayer == player1)
+            {
+                currentPlayer = player2;
+            }
+            else
+            {
+                currentPlayer = player1;
+            }
+        }
+
+        private void EndGame()
+        {
+            string winner;
+            int winnerScore;
+            if (player1.score > player2.score)
+            {
+                winner = player1.Name;
+                winnerScore = player1.score;
+                MessageBox.Show("Game Over! Winner: " + winner + "\n Score: " + winnerScore);
+            }
+            else if (player2.score > player1.score)
+            {
+                winner = player2.Name;
+                winnerScore = player2.score;
+                MessageBox.Show("Game Over! Winner: " + winner + "\n Score: " + winnerScore);
+            }
+            else
+            {
+               MessageBox.Show("It's a tie!");
+               
+            }
+                        
+            this.Close();
+        }
         private void GenerateLabels(string selectiranaVrednost)
         {
             int totalIcons = int.Parse(selectiranaVrednost);
@@ -91,12 +143,12 @@ namespace Proektna
                     Icons.RemoveAt(randomNumber);
 
                     label_Click(label);
+                   
                 }
 
             }
 
         }
-
         public void label_Click(Label label)
         {
             label.Click += (sender, e) =>
@@ -118,22 +170,35 @@ namespace Proektna
 
                 secondClicked = clickedLabel;
 
+                if (firstClicked.Text != secondClicked.Text)
+                {
+                    currentPlayer.score -= 1;
+                    UpdatePlayerUI();
+                    SwitchPlayer();
+                }
+
                 if (firstClicked.Text == secondClicked.Text)
                 {
                     pairsFound++;
+                   
+                    currentPlayer.score += 3;
+
                     firstClicked = null;
                     secondClicked = null;
+                    UpdatePlayerUI();     
 
-                    if(pairsFound == totalPairs)
+                    if (pairsFound == totalPairs)
                     {
-                        MessageBox.Show("Congratulations! You found all pairs!");
-                        this.Close();
+                        EndGame();
+                        
                     }
                     return;
                 }
+                else
+                                                
                 isChecking = true;
-
                 timer1.Start();
+
             };
         }
 
@@ -172,6 +237,8 @@ namespace Proektna
             firstClicked = null;
             secondClicked = null;
             isChecking = false;
+            UpdatePlayerUI();
         }
+                
     }
 }
