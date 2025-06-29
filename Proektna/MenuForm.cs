@@ -1,10 +1,10 @@
 namespace Proektna
 {
-    public partial class Form1 : Form
+    public partial class MenuForm : Form
     {
 
         public string selektiranaVrednost { get; set; }
-        public Form1()
+        public MenuForm()
         {
             InitializeComponent();
 
@@ -15,7 +15,7 @@ namespace Proektna
         {
             selektiranaVrednost = comboBox1.SelectedItem.ToString();
             SceneForm scene = new SceneForm(selektiranaVrednost);
-            
+
             scene.Show();
         }
 
@@ -30,6 +30,12 @@ namespace Proektna
         public string GetSelectedValue()
         {
             return selektiranaVrednost;
+        }
+
+        private void rules_Click(object sender, EventArgs e)
+        {
+            Rules rules = new Rules();
+            rules.Show();
         }
     }
 }

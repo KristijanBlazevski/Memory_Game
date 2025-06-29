@@ -26,15 +26,20 @@ namespace Proektna
         bool isChecking = false;
         int pairsFound = 0;
         int totalPairs = 0;
-        
+
         public SceneForm(string selectiranaVrednost)
         {
             InitializeComponent();
             player1 = new Player("Player 1");
             player2 = new Player("Player 2");
             currentPlayer = player1;
-           
-            timer1.Interval = 1000;            
+            resetFirst.Enabled = true;
+            jokerFirst.Enabled = true;
+            resetSecond.Enabled = false;
+            jokerSecond.Enabled = false;
+
+            timer1.Interval = 1000;
+            timer2.Interval = 600;
             Icons = GenerateIcons(selectiranaVrednost);
             totalPairs = int.Parse(selectiranaVrednost);
             labelPlayerTurn.Text = currentPlayer.Name;
@@ -72,7 +77,6 @@ namespace Proektna
             }
             GenerateLabels(selectiranaVrednost);
         }
-
         private void UpdatePlayerUI()
         {
             labelPlayerTurn.Text = currentPlayer.Name;
@@ -82,13 +86,40 @@ namespace Proektna
 
         private void SwitchPlayer()
         {
-            if(currentPlayer == player1)
+            if (currentPlayer == player1)
             {
                 currentPlayer = player2;
+                resetFirst.Enabled = false;
+                jokerFirst.Enabled = false;
+                resetSecond.Enabled = true;
+                jokerSecond.Enabled = true;
+
+                if (player2.UsedJoker == true)
+                {
+                    jokerSecond.Enabled = false;
+                }
+                if (player2.UsedReset == true)
+                {
+                    resetSecond.Enabled = false;
+                }
             }
             else
             {
                 currentPlayer = player1;
+                resetFirst.Enabled = true;
+                jokerFirst.Enabled = true;
+                resetSecond.Enabled = false;
+                jokerSecond.Enabled = false;
+
+                if (player1.UsedJoker == true)
+                {
+                    jokerFirst.Enabled = false;
+                }
+                if (player1.UsedReset == true)
+                {
+                    resetFirst.Enabled = false;
+                }
+
             }
         }
 
@@ -100,20 +131,20 @@ namespace Proektna
             {
                 winner = player1.Name;
                 winnerScore = player1.score;
-                MessageBox.Show("Game Over! Winner: " + winner + "\n Score: " + winnerScore);
+                MessageBox.Show("Game Over!\n Winner: " + winner + "\nScore: " + winnerScore);
             }
             else if (player2.score > player1.score)
             {
                 winner = player2.Name;
                 winnerScore = player2.score;
-                MessageBox.Show("Game Over! Winner: " + winner + "\n Score: " + winnerScore);
+                MessageBox.Show("Game Over!\n Winner: " + winner + "\nScore: " + winnerScore);
             }
             else
             {
-               MessageBox.Show("It's a tie!");
-               
+                MessageBox.Show("It's a tie!");
+
             }
-                        
+
             this.Close();
         }
         private void GenerateLabels(string selectiranaVrednost)
@@ -143,7 +174,7 @@ namespace Proektna
                     Icons.RemoveAt(randomNumber);
 
                     label_Click(label);
-                   
+
                 }
 
             }
@@ -175,28 +206,29 @@ namespace Proektna
                     currentPlayer.score -= 1;
                     UpdatePlayerUI();
                     SwitchPlayer();
+
                 }
 
                 if (firstClicked.Text == secondClicked.Text)
                 {
                     pairsFound++;
-                   
+
                     currentPlayer.score += 3;
 
                     firstClicked = null;
                     secondClicked = null;
-                    UpdatePlayerUI();     
+                    UpdatePlayerUI();
 
                     if (pairsFound == totalPairs)
                     {
                         EndGame();
-                        
+
                     }
                     return;
                 }
                 else
-                                                
-                isChecking = true;
+
+                    isChecking = true;
                 timer1.Start();
 
             };
@@ -239,6 +271,92 @@ namespace Proektna
             isChecking = false;
             UpdatePlayerUI();
         }
-                
+
+        private void jokerFirst_Click(object sender, EventArgs e)
+        {
+            player1.UsedJoker = true;
+            player1.score -= 3;
+            jokerFirst.Enabled = false;
+
+            foreach (Label label in tlpContainer.Controls)
+            {
+
+                if (label.ForeColor == Color.Black)
+                {
+                    label.ForeColor = Color.Black;
+                    continue;
+                }
+                else
+                    label.ForeColor = Color.Gray;
+            }
+
+            timer2.Start();
+            UpdatePlayerUI();
+
+        }
+
+        private void jokerSecond_Click(object sender, EventArgs e)
+        {
+            player2.UsedJoker = true;
+            player2.score -= 3;
+            jokerSecond.Enabled = false;
+
+            foreach (Label label in tlpContainer.Controls)
+            {
+
+                if (label.ForeColor == Color.Black)
+                {
+                    label.ForeColor = Color.Black;
+                    continue;
+                }
+                else
+                    label.ForeColor = Color.Gray;
+            }
+
+            timer2.Start();
+            UpdatePlayerUI();
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+
+            foreach (Label label in tlpContainer.Controls)
+            {
+
+                if (label.ForeColor == Color.Black)
+                {
+                    label.ForeColor = Color.Black;
+                    continue;
+                }
+                else
+                    label.ForeColor = Color.SteelBlue;
+
+
+            }
+            timer2.Stop();
+
+        }
+
+        private void resetFirst_Click(object sender, EventArgs e)
+        {
+            resetFirst.Enabled = false;
+            player1.UsedReset = true;
+            foreach (Label label in tlpContainer.Controls)
+            {
+                label.ForeColor = Color.SteelBlue;
+                label.BackColor = Color.SteelBlue;
+            }
+        }
+
+        private void resetSecond_Click(object sender, EventArgs e)
+        {
+            resetSecond.Enabled = false;
+            player2.UsedReset = true;
+            foreach (Label label in tlpContainer.Controls)
+            {
+                label.ForeColor = Color.SteelBlue;
+                label.BackColor = Color.SteelBlue;
+            }
+        }
     }
 }
