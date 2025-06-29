@@ -33,6 +33,8 @@ namespace Proektna
             player1 = new Player("Player 1");
             player2 = new Player("Player 2");
             currentPlayer = player1;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.BackColor = Color.Red;
             resetFirst.Enabled = true;
             jokerFirst.Enabled = true;
             resetSecond.Enabled = false;
@@ -42,7 +44,7 @@ namespace Proektna
             timer2.Interval = 600;
             Icons = GenerateIcons(selectiranaVrednost);
             totalPairs = int.Parse(selectiranaVrednost);
-            labelPlayerTurn.Text = currentPlayer.Name;
+            
             switch (selectiranaVrednost)
             {
                 case "4":
@@ -79,7 +81,6 @@ namespace Proektna
         }
         private void UpdatePlayerUI()
         {
-            labelPlayerTurn.Text = currentPlayer.Name;
             pointsFirst.Text = "Points: " + player1.score;
             pointsSecond.Text = "Points: " + player2.score;
         }
@@ -93,6 +94,12 @@ namespace Proektna
                 jokerFirst.Enabled = false;
                 resetSecond.Enabled = true;
                 jokerSecond.Enabled = true;
+
+                panel2.BorderStyle = BorderStyle.FixedSingle;
+                panel2.BackColor = Color.Yellow;
+                panel1.BorderStyle = BorderStyle.None;
+                panel1.ForeColor = Color.Black;
+                panel1.BackColor = Color.SkyBlue;
 
                 if (player2.UsedJoker == true)
                 {
@@ -110,6 +117,12 @@ namespace Proektna
                 jokerFirst.Enabled = true;
                 resetSecond.Enabled = false;
                 jokerSecond.Enabled = false;
+
+                panel1.BorderStyle = BorderStyle.FixedSingle;
+                panel1.BackColor = Color.Red;
+                panel2.BorderStyle = BorderStyle.None;
+                panel2.ForeColor = Color.Black;
+                panel2.BackColor = Color.SkyBlue;
 
                 if (player1.UsedJoker == true)
                 {
