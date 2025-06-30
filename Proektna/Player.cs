@@ -10,7 +10,7 @@ namespace Proektna
     {
         public string Name { get; set; }
         public int score { get; set; } = 0;
-        public int timeLeft { get; set; } = 60; 
+        public int timeLeft { get; set; }
         public bool UsedJoker { get; set; } = false;
         public bool UsedReset { get; set; } = false;
 
@@ -21,6 +21,7 @@ namespace Proektna
             Name = name;
            
         }
+
 
     }
 }

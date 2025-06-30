@@ -41,27 +41,37 @@ namespace Proektna
             jokerSecond.Enabled = false;
 
             timer1.Interval = 1000;
-            timer2.Interval = 600;
+            JokerTick.Interval = 600;
             Icons = GenerateIcons(selectiranaVrednost);
             totalPairs = int.Parse(selectiranaVrednost);
-            
+
+
+
             switch (selectiranaVrednost)
             {
                 case "4":
                     tlpContainer.RowCount = 2;
                     tlpContainer.ColumnCount = 4;
+                    player1.timeLeft = 30;
+                    player2.timeLeft = 30;
                     break;
                 case "6":
                     tlpContainer.RowCount = 3;
                     tlpContainer.ColumnCount = 4;
+                    player1.timeLeft = 40;
+                    player2.timeLeft = 40;
                     break;
                 case "8":
                     tlpContainer.RowCount = 4;
                     tlpContainer.ColumnCount = 4;
+                    player1.timeLeft = 50;
+                    player2.timeLeft = 50;
                     break;
                 case "10":
                     tlpContainer.RowCount = 5;
                     tlpContainer.ColumnCount = 4;
+                    player1.timeLeft = 60;
+                    player2.timeLeft = 60;
                     break;
                 default:
                     tlpContainer.RowCount = 3;
@@ -78,6 +88,10 @@ namespace Proektna
                 tlpContainer.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F / tlpContainer.ColumnCount));
             }
             GenerateLabels(selectiranaVrednost);
+            lTimerFirst.Text = "Time Left: " + player1.timeLeft;
+            lTimerSecond.Text = "Time Left: " + player2.timeLeft;
+            TimeLeftTick.Interval = 1000;
+            TimeLeftTick.Start();
         }
         private void UpdatePlayerUI()
         {
@@ -134,32 +148,9 @@ namespace Proektna
                 }
 
             }
+
         }
 
-        private void EndGame()
-        {
-            string winner;
-            int winnerScore;
-            if (player1.score > player2.score)
-            {
-                winner = player1.Name;
-                winnerScore = player1.score;
-                MessageBox.Show("Game Over!\n Winner: " + winner + "\nScore: " + winnerScore);
-            }
-            else if (player2.score > player1.score)
-            {
-                winner = player2.Name;
-                winnerScore = player2.score;
-                MessageBox.Show("Game Over!\n Winner: " + winner + "\nScore: " + winnerScore);
-            }
-            else
-            {
-                MessageBox.Show("It's a tie!");
-
-            }
-
-            this.Close();
-        }
         private void GenerateLabels(string selectiranaVrednost)
         {
             int totalIcons = int.Parse(selectiranaVrednost);
@@ -234,7 +225,7 @@ namespace Proektna
 
                     if (pairsFound == totalPairs)
                     {
-                        EndGame();
+                        CheckWinner();
 
                     }
                     return;
@@ -303,7 +294,7 @@ namespace Proektna
                     label.ForeColor = Color.Gray;
             }
 
-            timer2.Start();
+            JokerTick.Start();
             UpdatePlayerUI();
 
         }
@@ -326,11 +317,11 @@ namespace Proektna
                     label.ForeColor = Color.Gray;
             }
 
-            timer2.Start();
+            JokerTick.Start();
             UpdatePlayerUI();
         }
 
-        private void timer2_Tick(object sender, EventArgs e)
+        private void JokerTick_Tick(object sender, EventArgs e)
         {
 
             foreach (Label label in tlpContainer.Controls)
@@ -346,7 +337,7 @@ namespace Proektna
 
 
             }
-            timer2.Stop();
+            JokerTick.Stop();
 
         }
 
@@ -369,6 +360,69 @@ namespace Proektna
             {
                 label.ForeColor = Color.SteelBlue;
                 label.BackColor = Color.SteelBlue;
+            }
+        }
+
+        private Player CheckWinner()
+        {
+            if (pairsFound == totalPairs)
+            {
+
+                if (player1.score == player2.score)
+                {
+                    TimeLeftTick.Stop();
+                    MessageBox.Show("It's a tie!");
+                }
+                else
+                {
+                    return player1.score > player2.score ? player1 : player2;
+                }
+            }
+
+            if (player1.timeLeft <= 0)
+            {
+                return player2;
+            }
+
+            if (player2.timeLeft <= 0)
+            {
+                return player1;
+            }
+
+            return null;
+        }
+
+        private void TimeLeftTick_Tick(object sender, EventArgs e)
+        {
+            if (currentPlayer == player1)
+            {
+                player1.timeLeft--;
+                lTimerFirst.Text = "Time Left: " + player1.timeLeft;
+
+            }
+            else
+            {
+                player2.timeLeft--;
+                lTimerSecond.Text = "Time Left: " + player2.timeLeft;
+
+            }
+
+            Player winner = CheckWinner();
+            if (winner != null)
+            {
+                TimeLeftTick.Stop();
+                if (winner == player1 && player2.timeLeft <= 0)
+                {
+                    MessageBox.Show($"Time is up for Player 2!\nWinner: {winner.Name}\nScore: {winner.score}");
+                }
+                else if (winner == player2 && player1.timeLeft <= 0)
+                {
+                    MessageBox.Show($"Time is up for Player 1!\nWinner: {winner.Name}\nScore: {winner.score}");
+                }
+                else
+                    MessageBox.Show($"Winner: {winner.Name}\nScore: {winner.score}");
+
+                this.Close();
             }
         }
     }
