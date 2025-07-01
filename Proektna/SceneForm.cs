@@ -246,7 +246,7 @@ namespace Proektna
 
                     if (pairsFound == totalPairs)
                     {
-                        CheckWinner();
+                        EndGame();
 
                     }
                     return;
@@ -408,21 +408,8 @@ namespace Proektna
             return null;
         }
 
-        private void TimeLeftTick_Tick(object sender, EventArgs e)
+        private void EndGame()
         {
-            if (currentPlayer == player1)
-            {
-                player1.timeLeft--;
-                lTimerFirst.Text = "Time Left: " + player1.timeLeft;
-
-            }
-            else
-            {
-                player2.timeLeft--;
-                lTimerSecond.Text = "Time Left: " + player2.timeLeft;
-
-            }
-
             Player winner = CheckWinner();
             if (winner != null)
             {
@@ -440,6 +427,23 @@ namespace Proektna
 
                 this.Close();
             }
+        }
+        private void TimeLeftTick_Tick(object sender, EventArgs e)
+        {
+            if (currentPlayer == player1)
+            {
+                player1.timeLeft--;
+                lTimerFirst.Text = "Time Left: " + player1.timeLeft;
+
+            }
+            else
+            {
+                player2.timeLeft--;
+                lTimerSecond.Text = "Time Left: " + player2.timeLeft;
+
+            }
+
+            EndGame();
         }
     }
 }
