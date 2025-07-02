@@ -3,7 +3,7 @@ namespace Proektna
     public partial class MenuForm : Form
     {
 
-        public string selektiranaVrednost { get; set; }
+        public string? selektiranaVrednost { get; set; }
         public MenuForm()
         {
             InitializeComponent();
@@ -13,7 +13,7 @@ namespace Proektna
 
         private void button1_Click(object sender, EventArgs e)
         {
-            selektiranaVrednost = comboBox1.SelectedItem.ToString();
+            selektiranaVrednost = comboBox1.SelectedItem?.ToString();
             SceneForm scene = new SceneForm(selektiranaVrednost,playerOneName.Text,playerTwoName.Text);
             if (string.IsNullOrEmpty(playerOneName.Text))
             {
@@ -36,7 +36,7 @@ namespace Proektna
             
         }
 
-        public string GetSelectedValue()
+        public string? GetSelectedValue()
         {
             return selektiranaVrednost;
         }
@@ -46,18 +46,6 @@ namespace Proektna
             Rules rules = new Rules();
             rules.Show();
         }
-
-        private void playerOneName_TextChanged(object sender, EventArgs e)
-        {
-            Player player1 = new Player(playerOneName.Text);
-                              
-
-        }
-
-        private void playerTwoName_TextChanged(object sender, EventArgs e)
-        {
-            Player player2 = new Player(playerTwoName.Text);
-                        
-        }
+               
     }
 }

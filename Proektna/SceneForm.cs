@@ -18,14 +18,14 @@ namespace Proektna
 
         List<string> Icons;
 
-        Label firstClicked, secondClicked;
+        Label? firstClicked, secondClicked;
 
         Player player1, player2;
         Player currentPlayer;
 
         bool isChecking = false;
         int pairsFound = 0;
-        int totalPairs = 0;
+        readonly int totalPairs = 0;
         
         public SceneForm(string selectiranaVrednost, string playerOneName,string playerTwoName)
         {
@@ -33,8 +33,10 @@ namespace Proektna
             player1 = new Player(playerOneName);
             player2 = new Player(playerTwoName);
             currentPlayer = player1;
+
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.BackColor = Color.Red;
+
             resetFirst.Enabled = true;
             jokerFirst.Enabled = true;
             resetSecond.Enabled = false;
@@ -45,6 +47,7 @@ namespace Proektna
 
             timer1.Interval = 1000;
             JokerTick.Interval = 600;
+
             Icons = GenerateIcons(selectiranaVrednost);
             totalPairs = int.Parse(selectiranaVrednost);
 
@@ -172,10 +175,9 @@ namespace Proektna
 
         }
 
-        private void GenerateLabels(string selectiranaVrednost)
+        private void GenerateLabels(string selectiranaVrednost) 
         {
-            int totalIcons = int.Parse(selectiranaVrednost);
-
+            
             int widthCell = tlpContainer.ClientSize.Width / tlpContainer.ColumnCount;
             int heightCell = tlpContainer.ClientSize.Height / tlpContainer.RowCount;
 
@@ -258,8 +260,15 @@ namespace Proektna
 
             };
         }
-
-        private List<string> GenerateIcons(string selectiranaVrednost)
+        /// <summary>
+        /// Generates a list of icons based on the specified input value.
+        /// </summary>
+        /// <remarks>The method selects icons randomly from a predefined set of characters, ensuring that
+        /// each selected icon is removed from the pool of possible icons to avoid duplicates. The resulting list will
+        /// contain twice the number of icons specified by <paramref name="selectiranaVrednost"/>.</remarks>
+        /// <param name="selectiranaVrednost">A string representing the total number of icons to generate. Must be a valid integer.</param>
+        /// <returns>A list of strings containing the generated icons. Each icon appears twice in the list.</returns>
+        private List<string> GenerateIcons(string selectiranaVrednost) //Ikonite ti se strigovi no bidejki se samo eden karakter po soodvetno e da se od tip char
         {
             int totalIcons = int.Parse(selectiranaVrednost);
             List<string> icons = new List<string>();
@@ -277,7 +286,12 @@ namespace Proektna
 
             return icons;
         }
-
+        /// <summary>
+        /// Resets the game state and regenerates the icons and labels for the game board.
+        /// </summary>
+        /// <remarks>This method clears the current game board, generates a new set of icons and labels
+        /// based on the total number of pairs,  and resets the game state variables such as the number of pairs found
+        /// and the selected icons. It also updates the player UI to reflect the reset state.</remarks>
         private void RegenerateIcons()
         {
             tlpContainer.Controls.Clear();
@@ -378,8 +392,11 @@ namespace Proektna
             lTimerSecond.Text = "Time Left: " + player2.timeLeft;
             currentPlayer = player2;
         }
-
-        private Player CheckWinner()
+        /// <summary>
+        /// Checks if there is a winner based on the current game state.
+        /// </summary>
+        /// <returns></returns>
+        private Player? CheckWinner() 
         {
             if (pairsFound == totalPairs)
             {
@@ -410,7 +427,7 @@ namespace Proektna
 
         private void EndGame()
         {
-            Player winner = CheckWinner();
+            Player? winner = CheckWinner();
             if (winner != null)
             {
                 TimeLeftTick.Stop();
