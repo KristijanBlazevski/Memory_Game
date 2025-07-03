@@ -87,3 +87,6 @@ Memory Game е логичка друштвена игра за двајца иг
 *избор на сопствени теми и икони
 
 *игра против компјутер.
+
+## Видео
+https://www.youtube.com/watch?v=KjtL5LGfRgE&t=10s&ab_channel=KristijanBlazevski
